@@ -1,0 +1,19 @@
+.resultContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.result_container {
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+  width: 50%;
+  height: 70vh;
+  border: 1px solid #000;
+  border-radius: 5px;
+}

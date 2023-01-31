@@ -12,7 +12,7 @@ export default function LandingPage() {
           answer true or false. The answers will be displayed at the end of the
           game
         </p>
-        <Link to="question1">
+        <Link to="/question/1">
           <button type="button" className="begin_btn">
             Start 🤩
           </button>

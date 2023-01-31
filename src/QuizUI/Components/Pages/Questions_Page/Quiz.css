@@ -1,0 +1,64 @@
+.landingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.questions {
+  padding: 1vh;
+  display: flex;
+  margin: auto;
+  flex-direction: column;
+  gap: 3rem;
+  align-items: center;
+  width: 50%;
+  height: fit-content;
+  border: 1px solid #000;
+  border-radius: 5px;
+}
+
+.question {
+  max-width: 20vw;
+  max-height: 20vh;
+}
+
+.boolean {
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+.btnT {
+  background-color: green;
+  color: #fff;
+  height: 3rem;
+  width: 7rem;
+  font-size: 1.5vw;
+  border-radius: 4px;
+}
+
+.btnF {
+  background-color: blue;
+  color: #fff;
+  height: 3rem;
+  width: 7rem;
+  font-size: 1.5vw;
+  border-radius: 4px;
+}
+
+.nxtBtn {
+  width: 90%;
+  display: flex;
+  justify-content: right;
+}
+
+.nxtBtn button {
+  height: 3rem;
+  width: 7rem;
+  font-size: 1.5vw;
+  background-color: yellowgreen;
+  color: #fff;
+  border-radius: 4px;
+}
