@@ -10,50 +10,54 @@ import LandingPage from './QuizUI/Landing';
 
 function App() {
   const [questions, setQuestions] = useState([]);
-  const [error, setError] = useState('');
-  const [page, setPage] = useState(0);
-
-  // const [userAns, setUserAns] = useState([]);
+  const [answer, setAnswer] = useState({ passed: 0, failed: 0 });
+  const [response, setResponse] = useState('');
+  const [disable, setDisable] = useState(false);
 
   useEffect(() => {
-    getQuestions()
-      .then((data) => {
-        setQuestions([...data]);
-      })
-      .catch(() => {
-        setError('There was an error loading the questions');
-      });
-    // eslint-disable-next-line no-console
-    console.log(error);
-    // eslint-disable-next-line no-console
+    getQuestions().then((data) => {
+      setQuestions([...data]);
+    });
   }, []);
 
-  if (questions.length < 0) {
-    <h2>Loading....</h2>;
-  } else {
-    return (
-      <div className="App">
-        <ResultContext.Provider value={questions}>
-          <BrowserRouter>
-            <Routes>
-              <Route index path="/" element={<LandingPage />} />
-              <Route
-                path="/question/:id"
-                element={
-                  <Quiz
-                    quest={questions}
-                    number={page}
-                    movePage={() => setPage((prevPage) => prevPage + 1)}
-                  />
-                }
-              />
-              <Route index path="result" element={<Result />} />
-            </Routes>
-          </BrowserRouter>
-        </ResultContext.Provider>
-      </div>
-    );
+  function validate(ans, correctAns) {
+    if (ans === '') {
+      setResponse('');
+    }
+    if (ans === correctAns) {
+      setResponse('Correct');
+      setAnswer({ passed: answer.passed + 1, failed: answer.failed });
+      setDisable(true);
+    }
+    if (ans !== correctAns) {
+      setResponse('Wrong');
+      setAnswer({ passed: answer.passed, failed: answer.failed + 1 });
+      setDisable(true);
+    }
   }
+
+  return (
+    <div className="App">
+      <ResultContext.Provider
+        value={{
+          questions,
+          validate,
+          response,
+          setResponse,
+          answer,
+          disable,
+        }}
+      >
+        <BrowserRouter>
+          <Routes>
+            <Route index path="/" element={<LandingPage />} />
+            <Route path="/question/:id" element={<Quiz />} />
+            <Route index path="/result" element={<Result />} />
+          </Routes>
+        </BrowserRouter>
+      </ResultContext.Provider>
+    </div>
+  );
 }
 
 export default App;

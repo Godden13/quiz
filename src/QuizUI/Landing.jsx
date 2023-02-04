@@ -1,7 +1,12 @@
 import './Landing.css';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { ResultContext } from './Components/Context/quiz.context';
 
 export default function LandingPage() {
+  const question = useContext(ResultContext);
+  // eslint-disable-next-line no-console
+  console.log(question);
   return (
     <div className="quiz_home_container">
       <div className="homeBody">
