@@ -11,18 +11,20 @@ import './Quiz.css';
 export default function Quiz() {
   const index = useParams();
   const number = +index.id;
-  const { questions, validate, response, setResponse, disable, setDisable } =
+  const { questions, validate, response, setResponse, off, setOff } =
     useContext(ResultContext);
 
-  // function disableBtn = () => {
-  //   setDisable(true)
-  // }
+  function reset() {
+    setResponse('');
+    setOff(false);
+  }
 
   return (
     questions.length > 0 && (
       <div className="landingContainer">
         <div className="questions">
           <h1>Question {number}</h1>
+          <h4>Category: {questions[number - 1].category}</h4>
           <div
             className="question"
             dangerouslySetInnerHTML={{ __html: questions[number - 1].question }}
@@ -32,9 +34,10 @@ export default function Quiz() {
               type="button"
               className="btnT"
               value="True"
-              disabled={disable}
+              disabled={off}
               onClick={(e) => {
                 validate(e.target.value, questions[number - 1].correct_answer);
+                setOff(true);
               }}
             >
               True
@@ -42,9 +45,10 @@ export default function Quiz() {
             <button
               onClick={(e) => {
                 validate(e.target.value, questions[number - 1].correct_answer);
+                setOff(true);
               }}
               type="button"
-              disabled={disable}
+              disabled={off}
               value="False"
               className="btnF"
             >
@@ -59,8 +63,7 @@ export default function Quiz() {
               <button
                 type="button"
                 onClick={() => {
-                  setResponse('');
-                  setDisable(false);
+                  reset();
                 }}
               >
                 Next

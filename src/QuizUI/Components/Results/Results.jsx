@@ -10,14 +10,10 @@ export default function Result() {
   // eslint-disable-next-line no-console
   return (
     <div className="resultContainer">
+      <h2>Thank you for playing</h2>
       <div className="result_container">
-        <h2>Thank you for playing</h2>
         <h4>Here is your result</h4>
-        <div className="ans">
-          <p>Passed: {answer.passed}</p>
-          <p>Failed:{answer.failed}</p>
-        </div>
-        <ol className="questions">
+        <ol className="questions_list">
           {questions.map((question, index) => {
             return (
               <li
@@ -27,9 +23,14 @@ export default function Result() {
             );
           })}
         </ol>
-        <div className="q1">Done</div>
+        <div className="ans">
+          <p id="pass">Passed: {answer.passed}</p>
+          <p id="fail">Failed:{answer.failed}</p>
+        </div>
         <Link to="/">
-          <button type="button">Play Again</button>
+          <button type="button" className="replayBtn">
+            Play Again
+          </button>
         </Link>
       </div>
     </div>

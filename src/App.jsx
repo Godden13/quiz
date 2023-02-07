@@ -12,7 +12,7 @@ function App() {
   const [questions, setQuestions] = useState([]);
   const [answer, setAnswer] = useState({ passed: 0, failed: 0 });
   const [response, setResponse] = useState('');
-  const [disable, setDisable] = useState(false);
+  const [off, setOff] = useState(false);
 
   useEffect(() => {
     getQuestions().then((data) => {
@@ -27,12 +27,12 @@ function App() {
     if (ans === correctAns) {
       setResponse('Correct');
       setAnswer({ passed: answer.passed + 1, failed: answer.failed });
-      setDisable(true);
+      // setOff(true);
     }
     if (ans !== correctAns) {
       setResponse('Wrong');
       setAnswer({ passed: answer.passed, failed: answer.failed + 1 });
-      setDisable(true);
+      // setOff(true);
     }
   }
 
@@ -45,7 +45,8 @@ function App() {
           response,
           setResponse,
           answer,
-          disable,
+          off,
+          setOff,
         }}
       >
         <BrowserRouter>
