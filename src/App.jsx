@@ -1,25 +1,62 @@
-import logo from './logo.svg';
+/* eslint-disable react/jsx-no-constructed-context-values */
+import { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import getQuestions from './QuizUI/Components/Api/Api';
+import { ResultContext } from './QuizUI/Components/Context/quiz.context';
+import Quiz from './QuizUI/Components/Pages/Questions_Page/Quiz';
+import Result from './QuizUI/Components/Results/Results';
+import LandingPage from './QuizUI/Landing';
 
 function App() {
+  const [questions, setQuestions] = useState([]);
+  const [answer, setAnswer] = useState({ passed: 0, failed: 0 });
+  const [response, setResponse] = useState('');
+  const [off, setOff] = useState(false);
+
+  useEffect(() => {
+    getQuestions().then((data) => {
+      setQuestions([...data]);
+    });
+  }, []);
+
+  function validate(ans, correctAns) {
+    if (ans === '') {
+      setResponse('');
+    }
+    if (ans === correctAns) {
+      setResponse('Correct');
+      setAnswer({ passed: answer.passed + 1, failed: answer.failed });
+      // setOff(true);
+    }
+    if (ans !== correctAns) {
+      setResponse('Wrong');
+      setAnswer({ passed: answer.passed, failed: answer.failed + 1 });
+      // setOff(true);
+    }
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit
-          <code>src/App.js</code>
-          and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <ResultContext.Provider
+        value={{
+          questions,
+          validate,
+          response,
+          setResponse,
+          answer,
+          off,
+          setOff,
+        }}
+      >
+        <BrowserRouter>
+          <Routes>
+            <Route index path="/" element={<LandingPage />} />
+            <Route path="/question/:id" element={<Quiz />} />
+            <Route index path="/result" element={<Result />} />
+          </Routes>
+        </BrowserRouter>
+      </ResultContext.Provider>
     </div>
   );
 }
